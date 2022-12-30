@@ -134,6 +134,24 @@ def test_it_works_with_actual_context_managers():
         assert context_container.resolve(Thing).contents == "managed thing"
 
 
+def test_exceptions_are_provided_to_context_types():
+    class ThingManager:
+        def __init__(self):
+            self.exc_type = None
+            self.
+        
+        def __enter__(self):
+            return Thing("test")
+        
+        def __exit__(self, exc_type, exc_value, exc_tb):
+            pass
+
+    container[ContextManager[Thing]] = ThingManager  # type: ignore
+
+    with ContextContainer(container, context_types=[Thing]) as context_container:
+        raise Exception("expected")
+
+
 def test_the_container_can_be_reused():
     original = ContextContainer(container, context_types=[SomeDep])
     with original as context_container_1:
