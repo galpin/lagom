@@ -8,7 +8,6 @@ from lagom import (
     dependency_definition,
     ContextContainer,
     injectable,
-    Singleton,
 )
 from lagom.decorators import context_dependency_definition
 from lagom.exceptions import InvalidDependencyDefinition
@@ -190,6 +189,7 @@ def test_exceptions_are_provided_to_context_types():
         def __exit__(self, **exc_details):
             self.exc_details = exc_details
 
+    from lagom import Singleton
     container = Container()
     container[ContextManager[Thing]] = Singleton(ErrorManager)  # type: ignore
 
